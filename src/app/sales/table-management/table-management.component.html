@@ -1,1 +1,129 @@
-<p>table-management works!</p>
+<section
+  id="floor-list"
+  class="mb-3 flex h-[50px] w-full items-center justify-between rounded-xl bg-white px-3"
+>
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      class="flex h-[35px] w-[110px] items-center justify-center rounded-full border border-solid border-blue-500 text-[12px] font-normal text-blue-500"
+    >
+      1st Floor
+    </button>
+    <button
+      type="button"
+      class="flex h-[35px] w-[110px] items-center justify-center rounded-full bg-neutral-100 text-[12px] font-normal text-neutral-500"
+    >
+      2nd Floor
+    </button>
+    <button
+      type="button"
+      class="flex h-[35px] w-[110px] items-center justify-center rounded-full bg-neutral-100 text-[12px] font-normal text-neutral-500"
+    >
+      3rd Floor
+    </button>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <div
+      class="flex aspect-square w-[35px] items-center justify-center rounded-full bg-neutral-100"
+    >
+      <svg-icon
+        src="icons/magnifaying-glasses.svg"
+        class="h-auto w-[15px] text-neutral-900"
+      ></svg-icon>
+    </div>
+    <div
+      class="flex aspect-square w-[35px] items-center justify-center rounded-full bg-neutral-100"
+    >
+      <svg-icon
+        src="icons/funnel.svg"
+        class="h-auto w-[15px] text-neutral-900"
+      ></svg-icon>
+    </div>
+  </div>
+</section>
+
+<section
+  id="table-list"
+  class="mb-3 max-h-[calc(100vh-194px)] w-full overflow-y-auto rounded-xl bg-white px-3"
+>
+  <ng-container *ngFor="let grouped of groupedTableList | keyvalue">
+    <div class="w-full border-b border-solid border-neutral-200 py-3">
+      <h1 class="mb-2 text-[13px] font-medium text-neutral-500">
+        {{ grouped.key }} Persons Table
+      </h1>
+      <div class="grid w-full grid-cols-6 gap-2">
+        <ng-container *ngFor="let table of grouped.value">
+          <div
+            class="relative aspect-[1/1.1] w-full rounded-xl  {{
+              table.status === 'served'
+                ? 'bg-blue-50'
+                : table.status === 'reserved'
+                  ? 'bg-red-50'
+                  : 'bg-neutral-100'
+            }}"
+          >
+            <div class="mb-2 mt-4 flex justify-center">
+              <div
+                class="flex h-[30px] w-[55%] items-center justify-center rounded-full text-[13px] font-normal {{
+                  table.status === 'served'
+                    ? 'text-white bg-blue-500'
+                    : table.status === 'reserved'
+                      ? 'text-white bg-red-500'
+                      : 'text-gray-500 bg-white'
+                }}"
+              >
+                {{ table.table }}
+              </div>
+            </div>
+            <div
+              class="w-full px-2 text-center text-[11px] font-normal {{
+                table.status === 'served'
+                  ? 'text-blue-500'
+                  : table.status === 'reserved'
+                    ? 'text-red-500'
+                    : 'text-gray-500'
+              }}"
+            >
+              <ng-container *ngIf="table.personName">
+                <span class="font-semibold">{{ table.personName }}:</span>
+              </ng-container>
+
+              {{ table.personAmount }} Guest
+            </div>
+            <div
+              class="absolute bottom-2 left-0 flex w-full justify-center text-[11px] font-normal text-neutral-500"
+            >
+              {{ table.time || "--:--" }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</section>
+
+<section
+  id="table-status"
+  class="flex h-[50px] w-full items-center justify-between rounded-xl bg-white px-3"
+>
+  <h1 class="text-[13px] font-semibold text-neutral-900">Table Status</h1>
+
+  <div class="flex items-center gap-12">
+    <div
+      class="relative flex items-center text-[13px] font-semibold text-neutral-900 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-neutral-300"
+    >
+      Available
+    </div>
+    <div
+      class="relative flex items-center text-[13px] font-semibold text-neutral-900 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-blue-500"
+    >
+      Served
+    </div>
+    <div
+      class="relative flex items-center text-[13px] font-semibold text-neutral-900 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-red-500"
+    >
+      Reserved
+    </div>
+  </div>
+</section>
