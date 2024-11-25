@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.small-popup {
+  max-width: 250px;
+  padding: 5px 10px 5px 10px;
+  font-size: 12px;
+}
+
+.small-icon {
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  margin: 5px auto;
+}
+
+.small-title {
+  font-size: 16px;
+  margin: 0px 10px !important;
+}
+
+.small-html {
+  font-size: 15px;
+  margin: 0px 10px !important;
+}

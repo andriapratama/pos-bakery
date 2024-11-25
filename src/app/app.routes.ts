@@ -1,5 +1,4 @@
-import { AppComponent } from './app.component';
-import { Routes, provideRouter } from '@angular/router';
+import { provideRouter, Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
