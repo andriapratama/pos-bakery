@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { Category } from '../@entities/category';
 import { Table } from '../@entities/table';
 
 @Injectable({
@@ -366,6 +367,39 @@ export class DummyService {
       status: 'available',
       floorNumber: 2,
       time: '',
+    },
+  ];
+
+  public categoryList: Category[] = [
+    {
+      id: 1,
+      name: 'all menu',
+      icon: 'icons/book-open.svg',
+    },
+    {
+      id: 2,
+      name: 'breads',
+      icon: 'icons/cookie.svg',
+    },
+    {
+      id: 3,
+      name: 'cakes',
+      icon: 'icons/cake.svg',
+    },
+    {
+      id: 4,
+      name: 'donuts',
+      icon: 'icons/donut.svg',
+    },
+    {
+      id: 5,
+      name: 'pastries',
+      icon: 'icons/croissant.svg',
+    },
+    {
+      id: 6,
+      name: 'sandwich',
+      icon: 'icons/sandwich.svg',
     },
   ];
 

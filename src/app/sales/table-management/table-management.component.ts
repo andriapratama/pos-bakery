@@ -3,11 +3,13 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LoaderService } from '../../@components/loader/loader.service';
 import { Table } from '../../@entities/table';
 import { DummyService } from '../../@services/dummy.service';
 import { ToastService } from '../../@services/toast.service';
+import { SalesService } from '../sales.service';
 
 @Component({
   selector: 'app-table-management',
@@ -35,9 +37,15 @@ export class TableManagementComponent implements OnInit {
     public dummySvc: DummyService,
     private toast: ToastService,
     private loader: LoaderService,
+    public salesSvc: SalesService,
+    private router: Router,
   ) {}
 
   async ngOnInit(): Promise<void> {
+    setTimeout(() => {
+      this.salesSvc.isTemplate = true;
+    });
+
     const dataFilter: Table[] = this.dummySvc.tableData.filter(
       (table) => table.floorNumber === this.floorActive,
     );
@@ -121,6 +129,7 @@ export class TableManagementComponent implements OnInit {
   }
 
   public onShowTableModal(table: Table): void {
+    if (table.status !== 'available') this.router.navigateByUrl('/sales/order');
     this.tableSelected = table;
     this.isShowTableModal = true;
   }
@@ -168,21 +177,28 @@ export class TableManagementComponent implements OnInit {
     this.loader.show();
 
     const time = new Date().getTime();
-
-    console.log(time);
+    const formattedTime = new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    }).format(time);
 
     const index = this.dummySvc.tableData.findIndex(
       (table) => table.table === this.tableSelected.table,
     );
 
-    this.dummySvc.tableData[index].customerCount =
-      this.tableSelected.customerCount;
-    this.dummySvc.tableData[index].customerName =
-      this.tableSelected.customerName;
-    this.dummySvc.tableData[index].status = this.tableSelected.status;
-    this.dummySvc.tableData[index].time = this.tableSelected.status;
+    this.dummySvc.tableData[index].customerCount = parseInt(
+      this.customerCountTmp,
+    );
+    this.dummySvc.tableData[index].customerName = this.customerNameTmp;
+    this.dummySvc.tableData[index].status = this.statusTmp;
+    this.dummySvc.tableData[index].time = this.timeTmp
+      ? this.timeTmp
+      : formattedTime;
 
     setTimeout(() => {
+      if (this.statusTmp === 'served')
+        this.router.navigateByUrl('/sales/order');
       this.onHideTableModal();
       this.isSubmitting = false;
       this.loader.hide();

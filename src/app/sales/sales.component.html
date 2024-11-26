@@ -1,119 +1,124 @@
 <div class="flex w-full justify-center">
-  <div class="w-full p-2 lg:w-[1024px]">
-    <nav class="mb-3 flex w-full items-center justify-between">
-      <div class="flex items-center gap-4">
-        <div
-          class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-white"
-        >
-          <svg-icon
-            src="icons/bars.svg"
-            class="h-auto w-[23px] text-blue-500"
-          ></svg-icon>
-        </div>
-        <h1 class="text-[19px] font-semibold text-neutral-900">Tables</h1>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <div
-          class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-5 pr-[6px]"
-        >
-          <span class="text-[12px] font-semibold text-neutral-900"
-            >Wed, 29 May 2024</span
-          >
-
+  <div class="w-full lg:w-[1024px] {{ salesSvc.isTemplate ? 'p-2' : 'p-0' }}">
+    <ng-container *ngIf="salesSvc.isTemplate">
+      <nav class="mb-3 flex w-full items-center justify-between">
+        <div class="flex items-center gap-4">
           <div
-            class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-blue-50"
+            class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-white"
           >
             <svg-icon
-              src="icons/calendar.svg"
-              class="h-auto w-[15px] text-blue-500"
+              src="icons/bars.svg"
+              class="h-auto w-[23px] text-blue-500"
             ></svg-icon>
           </div>
+          <h1 class="text-[19px] font-semibold text-neutral-900">Tables</h1>
         </div>
 
-        <div
-          class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-8 pr-[6px]"
-        >
+        <div class="flex items-center gap-3">
           <div
-            class="relative flex items-center text-[12px] font-semibold text-green-600 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-green-600"
+            class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-5 pr-[6px]"
           >
-            Open Order
-          </div>
+            <span class="text-[12px] font-medium text-neutral-900"
+              >Wed, 29 May 2024</span
+            >
 
-          <div
-            class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-green-50"
-          >
-            <svg-icon
-              src="icons/power.svg"
-              class="h-auto w-[15px] text-green-800"
-            ></svg-icon>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div class="flex h-auto w-full gap-3">
-      <aside class="relative h-[calc(100vh-70px)] w-[230px]">
-        <div
-          class="mb-3 flex h-[50px] w-full items-center rounded-xl bg-blue-500 px-5 text-[13px] font-medium text-white"
-        >
-          Tables
-        </div>
-        <div
-          class="flex h-[50px] w-full items-center rounded-xl bg-white px-5 text-[13px] font-medium text-neutral-900"
-        >
-          Order History
-        </div>
-
-        <div
-          class="absolute bottom-0 left-0 right-0 w-full rounded-xl bg-white"
-        >
-          <div class="w-full p-2">
-            <div class="mb-1 flex items-center gap-8">
-              <div
-                class="relative flex items-center text-[16px] font-bold italic text-blue-500 before:absolute before:right-[-20px] before:aspect-square before:w-[5px] before:translate-y-[1px] before:rounded-full before:bg-blue-500"
-              >
-                Bakehouse
-              </div>
-              <div class="text-[11px] font-normal text-neutral-500">
-                POS System
-              </div>
+            <div
+              class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-blue-50"
+            >
+              <svg-icon
+                src="icons/calendar.svg"
+                class="h-auto w-[15px] text-blue-500"
+              ></svg-icon>
             </div>
-            <p class="mb-4 text-[11px] font-normal text-neutral-500">
-              The dream taste & magic of sweet moment in every bit from our
-              bakery.
-            </p>
-            <div class="flex w-full items-center gap-3">
-              <div
-                class="flex h-[25px] items-center gap-1 rounded-full border border-solid border-neutral-200 pl-1 pr-2"
-              >
+          </div>
+
+          <div
+            class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-8 pr-[6px]"
+          >
+            <div
+              class="relative flex items-center text-[12px] font-medium text-green-700 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-green-600"
+            >
+              Open Order
+            </div>
+
+            <div
+              class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-green-50"
+            >
+              <svg-icon
+                src="icons/power.svg"
+                class="h-auto w-[15px] text-green-800"
+              ></svg-icon>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex h-auto w-full gap-3">
+        <aside class="relative h-[calc(100vh-70px)] w-[230px]">
+          <div
+            class="mb-3 flex h-[50px] w-full items-center rounded-xl bg-blue-500 px-5 text-[13px] font-medium text-white"
+          >
+            Tables
+          </div>
+          <div
+            class="flex h-[50px] w-full items-center rounded-xl bg-white px-5 text-[13px] font-medium text-neutral-900"
+          >
+            Order History
+          </div>
+
+          <div
+            class="absolute bottom-0 left-0 right-0 w-full rounded-xl bg-white"
+          >
+            <div class="w-full p-2">
+              <div class="mb-1 flex items-center gap-8">
                 <div
-                  class="flex aspect-square w-[20px] items-center justify-center rounded-full bg-neutral-50"
+                  class="relative flex items-center text-[16px] font-bold italic text-blue-500 before:absolute before:right-[-20px] before:aspect-square before:w-[5px] before:translate-y-[1px] before:rounded-full before:bg-blue-500"
                 >
-                  <svg-icon
-                    src="icons/copyright.svg"
-                    class="h-auto w-[10px] text-neutral-500"
-                  ></svg-icon>
+                  Bakehouse
                 </div>
-                <div class="text-[10px] font-normal text-neutral-500">
-                  2024. Bakehouse
+                <div class="text-[11px] font-normal text-neutral-500">
+                  POS System
                 </div>
               </div>
-              <div
-                class="flex h-[25px] items-center gap-1 rounded-full bg-neutral-100 px-3"
-              >
-                <div class="text-[10px] font-normal text-neutral-500">
-                  Contacts
+              <p class="mb-4 text-[11px] font-normal text-neutral-500">
+                The dream taste & magic of sweet moment in every bit from our
+                bakery.
+              </p>
+              <div class="flex w-full items-center gap-3">
+                <div
+                  class="flex h-[25px] items-center gap-1 rounded-full border border-solid border-neutral-200 pl-1 pr-2"
+                >
+                  <div
+                    class="flex aspect-square w-[20px] items-center justify-center rounded-full bg-neutral-50"
+                  >
+                    <svg-icon
+                      src="icons/copyright.svg"
+                      class="h-auto w-[10px] text-neutral-500"
+                    ></svg-icon>
+                  </div>
+                  <div class="text-[10px] font-normal text-neutral-500">
+                    2024. Bakehouse
+                  </div>
+                </div>
+                <div
+                  class="flex h-[25px] items-center gap-1 rounded-full bg-neutral-100 px-3"
+                >
+                  <div class="text-[10px] font-normal text-neutral-500">
+                    Contacts
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </aside>
+        </aside>
 
-      <div class="flex-1">
-        <router-outlet />
+        <div class="flex-1">
+          <router-outlet />
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="!salesSvc.isTemplate">
+      <router-outlet />
+    </ng-container>
   </div>
 </div>

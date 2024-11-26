@@ -184,7 +184,7 @@
     </h1>
 
     <div class="mt-2 w-full px-5">
-      <label for="#status-tmp" class="text-[11px] font-normal text-neutral-900"
+      <label for="status-tmp" class="text-[11px] font-normal text-neutral-900"
         >Status</label
       >
       <select
@@ -200,7 +200,7 @@
 
     <div class="mt-2 w-full px-5">
       <label
-        for="#customer-name"
+        for="customer-name"
         class="text-[11px] font-normal text-neutral-900"
         >Customer Name</label
       >
@@ -216,7 +216,7 @@
 
     <div class="mt-2 w-full px-5">
       <label
-        for="#customer-count"
+        for="customer-count"
         class="text-[11px] font-normal text-neutral-900"
         >Cutomer Count</label
       >
@@ -224,7 +224,7 @@
         id="customer-count"
         name="customer-count"
         type="text"
-        placeholder="Ex: 2"
+        [placeholder]="'Max ' + tableSelected.maxCustomerCount + ' persons'"
         class="flex h-[35px] w-full items-center rounded-lg border border-solid border-neutral-200 px-3 text-[11px] font-normal text-neutral-500 outline-none"
         inputmode="numeric"
         [(ngModel)]="customerCountTmp"
@@ -234,7 +234,7 @@
 
     <ng-container *ngIf="statusTmp === 'reserved'">
       <div class="mt-2 w-full px-5">
-        <label for="#time-tmp" class="text-[11px] font-normal text-neutral-900"
+        <label for="time-tmp" class="text-[11px] font-normal text-neutral-900"
           >Time</label
         >
         <input

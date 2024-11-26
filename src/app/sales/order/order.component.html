@@ -1,0 +1,378 @@
+<div class="flex w-full">
+  <div class="relative flex-1 overflow-hidden p-2">
+    <nav class="mb-3 flex w-full items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div
+          class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-white"
+        >
+          <svg-icon
+            src="icons/bars.svg"
+            class="h-auto w-[23px] text-blue-500"
+          ></svg-icon>
+        </div>
+        <div
+          class="flex h-[40px] items-center gap-3 rounded-full bg-white pl-[6px] pr-5"
+        >
+          <div
+            class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-blue-50"
+          >
+            <svg-icon
+              src="icons/calendar.svg"
+              class="h-auto w-[15px] text-blue-500"
+            ></svg-icon>
+          </div>
+          <span class="text-[12px] font-medium text-neutral-900"
+            >Wed, 29 May 2024</span
+          >
+        </div>
+        <svg-icon
+          src="icons/minus.svg"
+          class="h-auto w-[13px] text-neutral-900"
+        ></svg-icon>
+        <div
+          class="flex h-[40px] items-center gap-3 rounded-full bg-white pl-[6px] pr-5"
+        >
+          <div
+            class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-blue-50"
+          >
+            <svg-icon
+              src="icons/clock.svg"
+              class="h-auto w-[15px] text-blue-500"
+            ></svg-icon>
+          </div>
+          <span class="text-[12px] font-medium text-neutral-900">07:59 AM</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-8 pr-[6px]"
+        >
+          <div
+            class="relative flex items-center text-[12px] font-medium text-green-700 before:absolute before:left-[-15px] before:aspect-square before:w-[7px] before:rounded-full before:bg-green-600"
+          >
+            Open Order
+          </div>
+
+          <div
+            class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-green-50"
+          >
+            <svg-icon
+              src="icons/power.svg"
+              class="h-auto w-[15px] text-green-800"
+            ></svg-icon>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section
+      id="category-list"
+      class="no-scrollbar mb-2 flex w-full items-center gap-2 overflow-x-auto"
+    >
+      <ng-container *ngFor="let category of dummySvc.categoryList">
+        <div
+          class="flex aspect-square w-[110px] shrink-0 flex-col justify-between rounded-lg bg-white p-2"
+        >
+          <div
+            class="flex aspect-square w-[35px] items-center justify-center rounded-full bg-neutral-100"
+          >
+            <svg-icon
+              [src]="category.icon"
+              class="h-auto w-[20px] text-neutral-500"
+            ></svg-icon>
+          </div>
+
+          <div class="block">
+            <h1
+              class="mb-1 text-[13px] font-medium capitalize text-neutral-900"
+            >
+              {{ category.name }}
+            </h1>
+            <p class="text-[12px] font-normal text-neutral-500">20 items</p>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+
+    <section
+      id="search-container"
+      class="relative mb-2 flex h-[45px] w-full items-center rounded-full bg-white px-4"
+    >
+      <input
+        type="text"
+        placeholder="Search something sweet on your mind"
+        class="w-full border-none pr-8 text-[12px] font-normal text-neutral-500 outline-none"
+      />
+      <div
+        class="absolute right-2 flex aspect-square w-[35px] items-center justify-center rounded-full bg-neutral-100"
+      >
+        <svg-icon
+          src="icons/magnifaying-glasses.svg"
+          class="h-auto w-[20px] text-neutral-500"
+        ></svg-icon>
+      </div>
+    </section>
+
+    <section
+      id="product-list"
+      class="no-scrollbar grid max-h-[calc(100vh-240px)] w-full grid-cols-4 gap-2 overflow-y-auto"
+    >
+      <ng-container *ngFor="let item of productList">
+        <div class="w-full rounded-xl bg-white p-[6px]">
+          <div
+            class="mb-2 flex aspect-[67/55] w-full items-center justify-center rounded-lg bg-neutral-100"
+          >
+            <svg-icon
+              src="icons/photo.svg"
+              class="w-[20%] text-neutral-500"
+            ></svg-icon>
+          </div>
+
+          <h1 class="mb-2 text-[13px] font-medium capitalize text-neutral-900">
+            Beef Crowich
+          </h1>
+
+          <div class="flex items-center justify-between">
+            <div
+              class="flex h-[18px] items-center justify-center rounded-full bg-orange-500/10 px-2"
+            >
+              <span class="text-[8px] font-medium text-orange-500">Breads</span>
+            </div>
+
+            <h2 class="text-[14px] font-medium text-neutral-900">IDR 20K</h2>
+          </div>
+        </div>
+      </ng-container>
+    </section>
+
+    <section
+      id="product-detail-modal"
+      class="absolute left-0 top-0 z-20 flex h-screen w-full items-center justify-center bg-blue-500/10"
+    >
+      <div class="h-[500px] w-[320px] rounded-xl bg-white">
+        <div
+          class="relative mb-2 flex h-[45px] w-full items-center justify-center border-b border-dashed border-neutral-200"
+        >
+          <span class="text-[13px] font-medium text-neutral-900"
+            >Detail Menu</span
+          >
+
+          <button
+            class="absolute right-2 flex aspect-square w-[30px] items-center justify-center rounded-full bg-red-50"
+          >
+            <svg-icon
+              src="icons/x-mark.svg"
+              class="w-[15px] text-red-500"
+            ></svg-icon>
+          </button>
+        </div>
+
+        <div class="w-full px-2">
+          <div
+            class="mb-2 flex h-[170px] w-full items-center justify-center rounded-xl bg-neutral-100"
+          >
+            <svg-icon
+              src="icons/photo.svg"
+              class="w-[20%] text-neutral-500"
+            ></svg-icon>
+          </div>
+
+          <div
+            class="flex h-[18px] items-center justify-center rounded-full bg-orange-500/10 px-2"
+          >
+            <span class="text-[8px] font-medium text-orange-500">Breads</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="relative h-screen w-[400px] bg-white">
+    <div
+      class="mb-2 flex w-full items-center justify-between p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+    >
+      <div
+        class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-neutral-100"
+      >
+        <svg-icon
+          src="icons/document-text.svg"
+          class="h-auto w-[19px] text-neutral-500"
+        ></svg-icon>
+      </div>
+
+      <div class="flex-1">
+        <p
+          class="mb-1 w-full text-center text-[15px] font-medium text-neutral-900"
+        >
+          Eloise's Order
+        </p>
+        <p class="w-full text-center text-[11px] font-normal text-neutral-500">
+          Order Number: $005
+        </p>
+      </div>
+
+      <div
+        class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-neutral-100"
+      >
+        <svg-icon
+          src="icons/pencil.svg"
+          class="h-auto w-[19px] text-neutral-500"
+        ></svg-icon>
+      </div>
+    </div>
+
+    <div
+      class="mb-2 grid w-full grid-cols-2 items-center justify-center gap-2 p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+    >
+      <div class="relative flex h-auto w-auto items-center">
+        <select
+          id="table"
+          name="table"
+          class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
+        >
+          <option value="table-1">Table 1</option>
+          <option value="table-2">Table 2</option>
+          <option value="table-3">Table 3</option>
+          <option value="table-4">Table 4</option>
+          <option value="table-5">Table 5</option>
+        </select>
+
+        <div
+          class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
+        >
+          <svg-icon
+            src="icons/sort-down.svg"
+            class="h-auto w-[8px] translate-y-[-3px] text-black"
+          ></svg-icon>
+        </div>
+      </div>
+      <div class="relative flex h-auto w-auto items-center">
+        <select
+          id="order-type"
+          name="order-type"
+          class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
+        >
+          <option value="dine-in">Dine In</option>
+          <option value="take-out">Take Out</option>
+        </select>
+
+        <div
+          class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
+        >
+          <svg-icon
+            src="icons/sort-down.svg"
+            class="h-auto w-[8px] translate-y-[-3px] text-black"
+          ></svg-icon>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="no-scrollbar h-[calc(100vh-335px)] w-full overflow-y-auto bg-white px-2"
+    >
+      <ng-container *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+        <div
+          class="flex aspect-[384/97] w-full items-center gap-2 border-b border-dashed border-neutral-200 py-2 last:border-none"
+        >
+          <div
+            class="flex h-[80px] w-[105px] items-center justify-center rounded-lg bg-neutral-100"
+          >
+            <svg-icon
+              src="icons/photo.svg"
+              class="w-[20%] text-neutral-500"
+            ></svg-icon>
+          </div>
+
+          <div class="h-full flex-1">
+            <div class="flex h-full w-full flex-col justify-between">
+              <div class="w-full">
+                <p
+                  class="mb-1 text-[12px] font-medium capitalize text-neutral-900"
+                >
+                  Beef Crowich
+                </p>
+
+                <p class="text-[12px] font-normal capitalize text-neutral-500">
+                  IDR 20K
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between">
+                <div
+                  class="flex aspect-square w-[30px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
+                >
+                  <svg-icon
+                    src="icons/document-text.svg"
+                    class="h-auto w-[15px] text-neutral-500"
+                  ></svg-icon>
+                </div>
+
+                <div
+                  class="flex w-[100px] items-center justify-between rounded-full border-2 border-solid border-neutral-100 bg-neutral-100"
+                >
+                  <div
+                    class="flex aspect-square w-[30px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
+                  >
+                    <svg-icon
+                      src="icons/minus.svg"
+                      class="h-auto w-[13px] text-neutral-500"
+                    ></svg-icon>
+                  </div>
+                  <span class="text-[12px] font-medium text-neutral-900"
+                    >1</span
+                  >
+                  <div
+                    class="flex aspect-square w-[30px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
+                  >
+                    <svg-icon
+                      src="icons/plus.svg"
+                      class="h-auto w-[13px] text-neutral-500"
+                    ></svg-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 w-full">
+      <div
+        class="mb-2 w-full bg-white px-2 py-3 shadow-[0_-18px_33px_-17px_rgba(115,115,115,0.2)]"
+      >
+        <div
+          class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
+        >
+          <span>Subtotal</span>
+          <span>IDR 20,000</span>
+        </div>
+        <div
+          class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
+        >
+          <span>Tax (10%)</span>
+          <span>IDR 20,000</span>
+        </div>
+        <div
+          class="mb-2 flex w-full items-center justify-between text-[13px] font-normal text-green-600"
+        >
+          <span>Discount</span>
+          <span>-IDR 20,000</span>
+        </div>
+
+        <div
+          class="flex w-full items-center justify-between border-t border-dashed border-neutral-200 pt-2 text-[17px] font-medium text-neutral-900"
+        >
+          <span>TOTAL</span>
+          <span>IDR 20,000</span>
+        </div>
+      </div>
+      <button
+        class="flex h-[60px] w-full items-center justify-center bg-blue-500"
+      >
+        <span class="text-[16px] font-normal text-white">Place Order</span>
+      </button>
+    </div>
+  </aside>
+</div>
