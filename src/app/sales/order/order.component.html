@@ -118,7 +118,7 @@
       id="product-list"
       class="no-scrollbar grid max-h-[calc(100vh-240px)] w-full grid-cols-4 gap-2 overflow-y-auto"
     >
-      <ng-container *ngFor="let product of dummySvc.productList">
+      <ng-container *ngFor="let product of productList">
         <div
           class="w-full rounded-xl bg-white p-[6px]"
           (click)="onShowProductDetailModal(product)"
@@ -221,36 +221,49 @@
             id="note-order"
             class="mb-3 h-[70px] w-full rounded-xl border-none bg-neutral-100 p-2 text-[12px] font-normal text-neutral-500 outline-none"
             placeholder="add notes to your order..."
+            [(ngModel)]="productSelected.note"
           ></textarea>
 
           <div
             class="mb-2 flex w-full items-center justify-between rounded-full bg-neutral-100 p-1"
           >
-            <div
+            <button
+              type="button"
               class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-white"
+              (click)="onDecreaseAmountProductDetailModal()"
             >
               <svg-icon
                 src="icons/minus.svg"
                 class="w-[15px] text-neutral-900"
               ></svg-icon>
-            </div>
-            <span class="text-[14px] font-medium text-neutral-900">1</span>
-            <div
+            </button>
+            <span class="text-[14px] font-medium text-neutral-900">{{
+              productSelected.amount
+            }}</span>
+            <button
+              type="button"
               class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-white"
+              (click)="onIncreaseAmountProductDetailModal()"
             >
               <svg-icon
                 src="icons/plus.svg"
                 class="w-[15px] text-neutral-900"
               ></svg-icon>
-            </div>
+            </button>
           </div>
         </div>
         <button
           type="button"
           class="flex h-[40px] w-full items-center justify-center bg-blue-500"
+          (click)="onAddCart()"
         >
           <span class="text-[12px] font-normal text-white"
-            >Add to cart (Rp. 20.000)</span
+            >Add to cart ({{
+              formatPrice(
+                productSelected.amount * productSelected.price,
+                "full"
+              )
+            }})</span
           >
         </button>
       </div>
@@ -340,7 +353,7 @@
     <div
       class="no-scrollbar h-[calc(100vh-335px)] w-full overflow-y-auto bg-white px-2"
     >
-      <ng-container *ngFor="let item of [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]">
+      <ng-container *ngFor="let cart of cartList">
         <div
           class="flex aspect-[384/97] w-full items-center gap-2 border-b border-dashed border-neutral-200 py-2 last:border-none"
         >
@@ -359,11 +372,11 @@
                 <p
                   class="mb-1 text-[12px] font-medium capitalize text-neutral-900"
                 >
-                  Beef Crowich
+                  {{ cart.name }}
                 </p>
 
                 <p class="text-[12px] font-normal capitalize text-neutral-500">
-                  IDR 20K
+                  {{ formatPrice(cart.amount * cart.price, "full") }}
                 </p>
               </div>
 
@@ -388,9 +401,9 @@
                       class="h-auto w-[13px] text-neutral-500"
                     ></svg-icon>
                   </div>
-                  <span class="text-[12px] font-medium text-neutral-900"
-                    >1</span
-                  >
+                  <span class="text-[12px] font-medium text-neutral-900">{{
+                    cart.amount
+                  }}</span>
                   <div
                     class="flex aspect-square w-[25px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
                   >
@@ -415,26 +428,26 @@
           class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
         >
           <span>Subtotal</span>
-          <span>IDR 20,000</span>
+          <span>{{ formatPrice(subTotal, "full") }}</span>
         </div>
         <div
           class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
         >
           <span>Tax (10%)</span>
-          <span>IDR 20,000</span>
+          <span>{{ formatPrice(tax, "full") }}</span>
         </div>
         <div
           class="mb-2 flex w-full items-center justify-between text-[13px] font-normal text-green-600"
         >
           <span>Discount</span>
-          <span>-IDR 20,000</span>
+          <span>-{{ formatPrice(discount, "full") }}</span>
         </div>
 
         <div
           class="flex w-full items-center justify-between border-t border-dashed border-neutral-200 pt-2 text-[17px] font-medium text-neutral-900"
         >
           <span>TOTAL</span>
-          <span>IDR 20,000</span>
+          <span>{{ formatPrice(total, "full") }}</span>
         </div>
       </div>
       <button
