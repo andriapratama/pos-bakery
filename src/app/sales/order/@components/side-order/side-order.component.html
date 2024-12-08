@@ -1,0 +1,244 @@
+<aside class="relative h-screen w-[370px] bg-white">
+  <div
+    *ngIf="!orderSvc.isEditCustomerName"
+    class="mb-2 flex w-full items-center justify-between p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+  >
+    <button
+      type="button"
+      class="flex aspect-square w-[40px] items-center justify-center rounded-full  outline-none {{
+        orderSvc.globalNotes
+          ? 'text-white bg-blue-500'
+          : 'text-neutral-500 bg-neutral-100'
+      }}"
+      (click)="onShowGlobalNotesModal()"
+    >
+      <svg-icon
+        src="icons/document-text.svg"
+        class="h-auto w-[19px]"
+      ></svg-icon>
+    </button>
+
+    <div class="flex-1">
+      <p
+        class="mb-1 w-full text-center text-[15px] font-medium capitalize text-neutral-900"
+      >
+        {{ orderSvc.customerName }}'s Order
+      </p>
+      <p class="w-full text-center text-[11px] font-normal text-neutral-500">
+        Order Number: #005
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-neutral-100 outline-none"
+      (click)="onEditCustomerName()"
+    >
+      <svg-icon
+        src="icons/pencil.svg"
+        class="h-auto w-[19px] text-neutral-500"
+      ></svg-icon>
+    </button>
+  </div>
+
+  <div
+    *ngIf="orderSvc.isEditCustomerName"
+    class="mb-2 flex w-full items-center justify-between gap-2 p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+  >
+    <button
+      type="button"
+      class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-green-50 outline-none"
+      (click)="onSaveCustomerName()"
+    >
+      <svg-icon
+        src="icons/check.svg"
+        class="h-auto w-[19px] text-green-500"
+      ></svg-icon>
+    </button>
+
+    <div class="flex-1">
+      <input
+        id="customer-name"
+        name="customer-name"
+        placeholder="Ex: John Doe"
+        type="text"
+        class="flex h-[35px] w-full items-center rounded-lg border border-solid border-neutral-200 px-3 text-[11px] font-normal text-neutral-500 outline-none"
+        [(ngModel)]="orderSvc.customerNameTmp"
+      />
+    </div>
+
+    <button
+      type="button"
+      class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-red-50 outline-none"
+      (click)="onHideEditCustomerName()"
+    >
+      <svg-icon
+        src="icons/x-mark.svg"
+        class="h-auto w-[19px] text-red-500"
+      ></svg-icon>
+    </button>
+  </div>
+
+  <div
+    class="mb-2 grid w-full grid-cols-2 items-center justify-center gap-2 p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+  >
+    <div class="relative flex h-auto w-auto items-center">
+      <select
+        id="table"
+        name="table"
+        class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
+      >
+        <option value="table-1">Table 1</option>
+        <option value="table-2">Table 2</option>
+        <option value="table-3">Table 3</option>
+        <option value="table-4">Table 4</option>
+        <option value="table-5">Table 5</option>
+      </select>
+
+      <div
+        class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
+      >
+        <svg-icon
+          src="icons/sort-down.svg"
+          class="h-auto w-[8px] translate-y-[-3px] text-black"
+        ></svg-icon>
+      </div>
+    </div>
+    <div class="relative flex h-auto w-auto items-center">
+      <select
+        id="order-type"
+        name="order-type"
+        class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
+      >
+        <option value="dine-in">Dine In</option>
+        <option value="take-out">Take Out</option>
+      </select>
+
+      <div
+        class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
+      >
+        <svg-icon
+          src="icons/sort-down.svg"
+          class="h-auto w-[8px] translate-y-[-3px] text-black"
+        ></svg-icon>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="no-scrollbar h-[calc(100vh-335px)] w-full overflow-y-auto bg-white px-2"
+  >
+    <ng-container *ngFor="let cart of orderSvc.cartList; index as i">
+      <div
+        class="flex aspect-[384/97] w-full items-center gap-2 border-b border-dashed border-neutral-200 py-2 last:border-none"
+      >
+        <div
+          class="flex h-[80px] w-[105px] items-center justify-center rounded-lg bg-neutral-100"
+        >
+          <svg-icon
+            src="icons/photo.svg"
+            class="w-[20%] text-neutral-500"
+          ></svg-icon>
+        </div>
+
+        <div class="h-full flex-1">
+          <div class="flex h-full w-full flex-col justify-between">
+            <div class="w-full">
+              <p
+                class="mb-1 text-[12px] font-medium capitalize text-neutral-900"
+              >
+                {{ cart.name }}
+              </p>
+
+              <p class="text-[12px] font-normal capitalize text-neutral-500">
+                {{ cart.price * cart.amount | formatCurrency: "full" }}
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <button
+                type="button"
+                class="flex aspect-square w-[30px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 outline-none {{
+                  cart.note
+                    ? 'text-white bg-blue-500'
+                    : 'text-neutral-500 bg-white'
+                }}"
+                (click)="onShowProductDetailModal(cart)"
+              >
+                <svg-icon
+                  src="icons/document-text.svg"
+                  class="h-auto w-[15px]"
+                ></svg-icon>
+              </button>
+
+              <div
+                class="flex w-[100px] items-center justify-between rounded-full border-2 border-solid border-neutral-100 bg-neutral-100"
+              >
+                <button
+                  type="button"
+                  class="flex aspect-square w-[25px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white outline-none"
+                  (click)="onDecreaseItemAmount(cart, i)"
+                >
+                  <svg-icon
+                    src="icons/minus.svg"
+                    class="h-auto w-[13px] text-neutral-500"
+                  ></svg-icon>
+                </button>
+                <span class="text-[12px] font-medium text-neutral-900">{{
+                  cart.amount
+                }}</span>
+                <button
+                  type="button"
+                  class="flex aspect-square w-[25px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white outline-none"
+                  (click)="onIcreaseItemAmount(cart, i)"
+                >
+                  <svg-icon
+                    src="icons/plus.svg"
+                    class="h-auto w-[13px] text-neutral-500"
+                  ></svg-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="absolute bottom-0 left-0 right-0 w-full">
+    <div
+      class="mb-2 w-full bg-white px-2 py-3 shadow-[0_-18px_33px_-17px_rgba(115,115,115,0.2)]"
+    >
+      <div
+        class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
+      >
+        <span>Subtotal</span>
+        <span>{{ orderSvc.subTotal | formatCurrency: "full" }}</span>
+      </div>
+      <div
+        class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
+      >
+        <span>Tax (10%)</span>
+        <span>{{ orderSvc.tax | formatCurrency: "full" }}</span>
+      </div>
+      <div
+        class="mb-2 flex w-full items-center justify-between text-[13px] font-normal text-green-600"
+      >
+        <span>Discount</span>
+        <span>-{{ orderSvc.discount | formatCurrency: "full" }}</span>
+      </div>
+
+      <div
+        class="flex w-full items-center justify-between border-t border-dashed border-neutral-200 pt-2 text-[17px] font-medium text-neutral-900"
+      >
+        <span>TOTAL</span>
+        <span>{{ orderSvc.total | formatCurrency: "full" }}</span>
+      </div>
+    </div>
+    <button
+      class="flex h-[60px] w-full items-center justify-center bg-blue-500"
+    >
+      <span class="text-[16px] font-normal text-white">Place Order</span>
+    </button>
+  </div>
+</aside>

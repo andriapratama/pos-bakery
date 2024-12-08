@@ -89,7 +89,18 @@
             >
               {{ category.name }}
             </h1>
-            <p class="text-[12px] font-normal text-neutral-500">20 items</p>
+            <p
+              class="text-[12px] font-normal text-neutral-500"
+              *ngIf="category.name === 'all menu'"
+            >
+              {{ orderSvc.productList.length }} items
+            </p>
+            <p
+              class="text-[12px] font-normal text-neutral-500"
+              *ngIf="category.name !== 'all menu'"
+            >
+              {{ onGetTotalProduct(category.name) }} items
+            </p>
           </div>
         </div>
       </ng-container>
@@ -118,7 +129,7 @@
       id="product-list"
       class="no-scrollbar grid max-h-[calc(100vh-240px)] w-full grid-cols-4 gap-2 overflow-y-auto"
     >
-      <ng-container *ngFor="let product of productList">
+      <ng-container *ngFor="let product of orderSvc.productList">
         <div
           class="w-full rounded-xl bg-white p-[6px]"
           (click)="onShowProductDetailModal(product)"
@@ -151,7 +162,7 @@
             </div>
 
             <h2 class="text-[14px] font-medium text-neutral-900">
-              {{ formatPrice(product.price, "short") }}
+              {{ product.price | formatCurrency: "short" }}
             </h2>
           </div>
         </div>
@@ -161,7 +172,9 @@
     <section
       id="product-detail-modal"
       class="absolute left-0 top-0  flex h-screen w-full items-center justify-center bg-blue-500/10 duration-200 ease-linear transition-all {{
-        isShowProductDetailModal ? 'z-20 opacity-100' : '-z-10 opacity-0'
+        orderSvc.isShowProductDetailModal
+          ? 'z-20 opacity-100'
+          : '-z-10 opacity-0'
       }}"
     >
       <div class="h-auto w-[320px] overflow-hidden rounded-xl bg-white">
@@ -194,26 +207,26 @@
 
           <div
             class="mb-2 flex h-[18px] w-fit items-center justify-center rounded-full px-2 {{
-              setCategoryBgColor(productSelected.category)
+              setCategoryBgColor(orderSvc.productSelected.category)
             }}"
           >
             <span
               class="text-[9px] font-medium capitalize {{
-                setCategoryTextColor(productSelected.category)
+                setCategoryTextColor(orderSvc.productSelected.category)
               }}"
-              >{{ productSelected.category }}</span
+              >{{ orderSvc.productSelected.category }}</span
             >
           </div>
 
           <h2 class="text-[14px] font-semibold text-neutral-900">
-            {{ productSelected.name }}
+            {{ orderSvc.productSelected.name }}
           </h2>
           <p class="mb-2 text-[13px] font-medium text-neutral-500">
-            {{ productSelected.description }}
+            {{ orderSvc.productSelected.description }}
           </p>
 
           <h3 class="mb-2 text-[16px] font-semibold text-blue-500">
-            {{ formatPrice(productSelected.price, "full") }}
+            {{ orderSvc.productSelected.price | formatCurrency: "full" }}
           </h3>
 
           <textarea
@@ -221,7 +234,7 @@
             id="note-order"
             class="mb-3 h-[70px] w-full rounded-xl border-none bg-neutral-100 p-2 text-[12px] font-normal text-neutral-500 outline-none"
             placeholder="add notes to your order..."
-            [(ngModel)]="productSelected.note"
+            [(ngModel)]="orderSvc.productSelected.note"
           ></textarea>
 
           <div
@@ -238,7 +251,7 @@
               ></svg-icon>
             </button>
             <span class="text-[14px] font-medium text-neutral-900">{{
-              productSelected.amount
+              orderSvc.productSelected.amount
             }}</span>
             <button
               type="button"
@@ -259,202 +272,57 @@
         >
           <span class="text-[12px] font-normal text-white"
             >Add to cart ({{
-              formatPrice(
-                productSelected.amount * productSelected.price,
-                "full"
-              )
+              orderSvc.productSelected.amount * orderSvc.productSelected.price
+                | formatCurrency: "full"
             }})</span
           >
         </button>
       </div>
     </section>
-  </div>
 
-  <aside class="relative h-screen w-[370px] bg-white">
-    <div
-      class="mb-2 flex w-full items-center justify-between p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
+    <section
+      id="note-global-modal"
+      class="absolute left-0 top-0  flex h-screen w-full items-center justify-center bg-blue-500/10 duration-200 ease-linear transition-all {{
+        orderSvc.isShowGlobalNoteModal ? 'z-20 opacity-100' : '-z-10 opacity-0'
+      }}"
     >
-      <div
-        class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-neutral-100"
-      >
-        <svg-icon
-          src="icons/document-text.svg"
-          class="h-auto w-[19px] text-neutral-500"
-        ></svg-icon>
-      </div>
-
-      <div class="flex-1">
-        <p
-          class="mb-1 w-full text-center text-[15px] font-medium text-neutral-900"
-        >
-          Eloise's Order
-        </p>
-        <p class="w-full text-center text-[11px] font-normal text-neutral-500">
-          Order Number: $005
-        </p>
-      </div>
-
-      <div
-        class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-neutral-100"
-      >
-        <svg-icon
-          src="icons/pencil.svg"
-          class="h-auto w-[19px] text-neutral-500"
-        ></svg-icon>
-      </div>
-    </div>
-
-    <div
-      class="mb-2 grid w-full grid-cols-2 items-center justify-center gap-2 p-2 shadow-[0_10px_33px_-17px_rgba(115,115,115,0.2)]"
-    >
-      <div class="relative flex h-auto w-auto items-center">
-        <select
-          id="table"
-          name="table"
-          class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
-        >
-          <option value="table-1">Table 1</option>
-          <option value="table-2">Table 2</option>
-          <option value="table-3">Table 3</option>
-          <option value="table-4">Table 4</option>
-          <option value="table-5">Table 5</option>
-        </select>
-
+      <div class="h-auto w-[320px] overflow-hidden rounded-xl bg-white">
         <div
-          class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
+          class="relative mb-2 flex h-[45px] w-full items-center justify-center border-b border-dashed border-neutral-200"
         >
-          <svg-icon
-            src="icons/sort-down.svg"
-            class="h-auto w-[8px] translate-y-[-3px] text-black"
-          ></svg-icon>
-        </div>
-      </div>
-      <div class="relative flex h-auto w-auto items-center">
-        <select
-          id="order-type"
-          name="order-type"
-          class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
-        >
-          <option value="dine-in">Dine In</option>
-          <option value="take-out">Take Out</option>
-        </select>
+          <h1 class="text-[13px] font-medium text-neutral-900">Note Global</h1>
 
-        <div
-          class="absolute right-2 flex aspect-square w-[20px] items-center justify-center rounded-full bg-white"
-        >
-          <svg-icon
-            src="icons/sort-down.svg"
-            class="h-auto w-[8px] translate-y-[-3px] text-black"
-          ></svg-icon>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="no-scrollbar h-[calc(100vh-335px)] w-full overflow-y-auto bg-white px-2"
-    >
-      <ng-container *ngFor="let cart of cartList">
-        <div
-          class="flex aspect-[384/97] w-full items-center gap-2 border-b border-dashed border-neutral-200 py-2 last:border-none"
-        >
-          <div
-            class="flex h-[80px] w-[105px] items-center justify-center rounded-lg bg-neutral-100"
+          <button
+            type="button"
+            class="absolute right-2 flex aspect-square w-[30px] items-center justify-center rounded-full bg-red-50 outline-none"
+            (click)="onHideGlobalNotesModal()"
           >
             <svg-icon
-              src="icons/photo.svg"
-              class="w-[20%] text-neutral-500"
+              src="icons/x-mark.svg"
+              class="w-[15px] text-red-500"
             ></svg-icon>
-          </div>
-
-          <div class="h-full flex-1">
-            <div class="flex h-full w-full flex-col justify-between">
-              <div class="w-full">
-                <p
-                  class="mb-1 text-[12px] font-medium capitalize text-neutral-900"
-                >
-                  {{ cart.name }}
-                </p>
-
-                <p class="text-[12px] font-normal capitalize text-neutral-500">
-                  {{ formatPrice(cart.amount * cart.price, "full") }}
-                </p>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <div
-                  class="flex aspect-square w-[30px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
-                >
-                  <svg-icon
-                    src="icons/document-text.svg"
-                    class="h-auto w-[15px] text-neutral-500"
-                  ></svg-icon>
-                </div>
-
-                <div
-                  class="flex w-[100px] items-center justify-between rounded-full border-2 border-solid border-neutral-100 bg-neutral-100"
-                >
-                  <div
-                    class="flex aspect-square w-[25px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
-                  >
-                    <svg-icon
-                      src="icons/minus.svg"
-                      class="h-auto w-[13px] text-neutral-500"
-                    ></svg-icon>
-                  </div>
-                  <span class="text-[12px] font-medium text-neutral-900">{{
-                    cart.amount
-                  }}</span>
-                  <div
-                    class="flex aspect-square w-[25px] items-center justify-center rounded-full border-2 border-solid border-neutral-100 bg-white"
-                  >
-                    <svg-icon
-                      src="icons/plus.svg"
-                      class="h-auto w-[13px] text-neutral-500"
-                    ></svg-icon>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </button>
         </div>
-      </ng-container>
-    </div>
 
-    <div class="absolute bottom-0 left-0 right-0 w-full">
-      <div
-        class="mb-2 w-full bg-white px-2 py-3 shadow-[0_-18px_33px_-17px_rgba(115,115,115,0.2)]"
-      >
-        <div
-          class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
+        <div class="no-scrollbar max-h-[500px] w-full overflow-y-auto px-2">
+          <textarea
+            name="note-order"
+            id="note-order"
+            class="mb-3 h-[150px] w-full rounded-xl border-none bg-neutral-100 p-2 text-[12px] font-normal text-neutral-500 outline-none"
+            placeholder="add global notes to your order..."
+            [(ngModel)]="orderSvc.globalNotesTmp"
+          ></textarea>
+        </div>
+        <button
+          type="button"
+          class="flex h-[40px] w-full items-center justify-center bg-blue-500"
+          (click)="onSaveGlobalNotes()"
         >
-          <span>Subtotal</span>
-          <span>{{ formatPrice(subTotal, "full") }}</span>
-        </div>
-        <div
-          class="mb-1 flex w-full items-center justify-between text-[13px] font-normal text-neutral-500"
-        >
-          <span>Tax (10%)</span>
-          <span>{{ formatPrice(tax, "full") }}</span>
-        </div>
-        <div
-          class="mb-2 flex w-full items-center justify-between text-[13px] font-normal text-green-600"
-        >
-          <span>Discount</span>
-          <span>-{{ formatPrice(discount, "full") }}</span>
-        </div>
-
-        <div
-          class="flex w-full items-center justify-between border-t border-dashed border-neutral-200 pt-2 text-[17px] font-medium text-neutral-900"
-        >
-          <span>TOTAL</span>
-          <span>{{ formatPrice(total, "full") }}</span>
-        </div>
+          <span class="text-[12px] font-normal text-white">Save</span>
+        </button>
       </div>
-      <button
-        class="flex h-[60px] w-full items-center justify-center bg-blue-500"
-      >
-        <span class="text-[16px] font-normal text-white">Place Order</span>
-      </button>
-    </div>
-  </aside>
+    </section>
+  </div>
+
+  <app-side-order></app-side-order>
 </div>

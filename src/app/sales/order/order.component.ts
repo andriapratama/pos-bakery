@@ -1,3 +1,6 @@
+import { FormatCurrencyPipe } from './../../@pipes/format-currency.pipe';
+import { SideOrderComponent } from './@components/side-order/side-order.component';
+import { OrderService } from './order.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { CommonModule } from '@angular/common';
@@ -12,22 +15,20 @@ import { SalesService } from '../sales.service';
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [AngularSvgIconModule, CommonModule, FormsModule],
+  imports: [
+    AngularSvgIconModule,
+    CommonModule,
+    FormsModule,
+    SideOrderComponent,
+    FormatCurrencyPipe,
+  ],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss',
 })
 export class OrderComponent implements OnInit {
-  public productList: Product[] = [];
-  public productSelected: Product = new Product();
-  public cartList: Product[] = [];
-  public isShowProductDetailModal: boolean = false;
-  public subTotal: number = 0;
-  public tax: number = 0;
-  public discount: number = 0;
-  public total: number = 0;
-
   constructor(
     public salesSvc: SalesService,
+    public orderSvc: OrderService,
     public dummySvc: DummyService,
     private toast: ToastService,
   ) {}
@@ -37,65 +38,55 @@ export class OrderComponent implements OnInit {
       this.salesSvc.isTemplate = false;
     });
 
-    this.productList = this.dummySvc.productList;
+    this.orderSvc.productList = this.dummySvc.productList;
   }
 
   public onShowProductDetailModal(product: Product): void {
-    this.isShowProductDetailModal = true;
-    this.productSelected = { ...product };
+    this.orderSvc.isShowProductDetailModal = true;
+    this.orderSvc.productSelected = { ...product };
   }
 
   public onHideProductDetailModal(): void {
-    this.isShowProductDetailModal = false;
+    this.orderSvc.isShowProductDetailModal = false;
     setTimeout(() => {
-      this.productSelected = new Product();
+      this.orderSvc.productSelected = new Product();
     }, 200);
   }
 
-  public formatPrice(price: number, style: 'short' | 'full'): string {
-    if (style === 'short') {
-      if (price >= 1000) {
-        const newFormat = (price / 1000).toFixed(0) + 'K';
-        return `IDR ${newFormat}`;
-      }
-      return `IDR ${price.toString()}`;
-    } else {
-      const newFormat = new Intl.NumberFormat().format(price);
-      return `IDR ${newFormat}`;
-    }
-  }
-
   public onIncreaseAmountProductDetailModal(): void {
-    this.productSelected.amount += 1;
+    this.orderSvc.productSelected.amount += 1;
   }
 
   public onDecreaseAmountProductDetailModal(): void {
-    if (this.productSelected.amount <= 0) {
-      this.productSelected.amount = 0;
+    if (this.orderSvc.productSelected.amount <= 0) {
+      this.orderSvc.productSelected.amount = 0;
     } else {
-      this.productSelected.amount -= 1;
+      this.orderSvc.productSelected.amount -= 1;
     }
   }
 
   public onAddCart(): void {
-    if (this.productSelected.amount <= 0) {
+    if (this.orderSvc.productSelected.amount <= 0) {
       this.toast.error('Add 1 amount first', 'Error');
     } else {
-      const indexProduct = this.dummySvc.productList.findIndex(
-        (item) => item.id === this.productSelected.id,
+      const indexProduct = this.orderSvc.productList.findIndex(
+        (item) => item.id === this.orderSvc.productSelected.id,
       );
-      this.dummySvc.productList[indexProduct].amount =
-        this.productSelected.amount;
-      this.dummySvc.productList[indexProduct].note = this.productSelected.note;
+      this.orderSvc.productList[indexProduct].amount =
+        this.orderSvc.productSelected.amount;
+      this.orderSvc.productList[indexProduct].note =
+        this.orderSvc.productSelected.note;
 
-      const indexCart = this.cartList.findIndex(
-        (item) => item.id === this.productSelected.id,
+      const indexCart = this.orderSvc.cartList.findIndex(
+        (item) => item.id === this.orderSvc.productSelected.id,
       );
       if (indexCart < 0) {
-        this.cartList.push(this.productSelected);
+        this.orderSvc.cartList.push(this.orderSvc.productSelected);
       } else {
-        this.cartList[indexCart].amount = this.productSelected.amount;
-        this.cartList[indexCart].note = this.productSelected.note;
+        this.orderSvc.cartList[indexCart].amount =
+          this.orderSvc.productSelected.amount;
+        this.orderSvc.cartList[indexCart].note =
+          this.orderSvc.productSelected.note;
       }
 
       this.countSummary();
@@ -106,12 +97,33 @@ export class OrderComponent implements OnInit {
   public countSummary(): void {
     let subTotalTmp: number[] = [];
 
-    this.cartList.map((item) => {
+    this.orderSvc.cartList.map((item) => {
       subTotalTmp.push(item.amount * item.price);
     });
-    this.subTotal = subTotalTmp.reduce((sum, item) => sum + item, 0);
-    this.tax = (this.subTotal / 100) * 10;
-    this.total = this.subTotal + this.tax - this.discount;
+    this.orderSvc.subTotal = subTotalTmp.reduce((sum, item) => sum + item, 0);
+    this.orderSvc.tax = (this.orderSvc.subTotal / 100) * 10;
+    this.orderSvc.total =
+      this.orderSvc.subTotal + this.orderSvc.tax - this.orderSvc.discount;
+  }
+
+  public onSaveGlobalNotes(): void {
+    this.orderSvc.globalNotes = this.orderSvc.globalNotesTmp;
+    this.onHideGlobalNotesModal();
+  }
+
+  public onHideGlobalNotesModal(): void {
+    this.orderSvc.isShowGlobalNoteModal = false;
+    setTimeout(() => {
+      this.orderSvc.globalNotesTmp = '';
+    }, 200);
+  }
+
+  public onGetTotalProduct(name: string): string {
+    const data = this.orderSvc.productList.filter(
+      (product) =>
+        product.category.toLowerCase() === name.toLowerCase().replace(' ', '-'),
+    );
+    return data.length.toString();
   }
 
   public setCategoryBgColor(category: string) {
