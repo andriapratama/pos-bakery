@@ -1,10 +1,13 @@
-import { FormsModule } from '@angular/forms';
-import { Product } from './../../../../@entities/product';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { FormatCurrencyPipe } from './../../../../@pipes/format-currency.pipe';
-import { OrderService } from './../../order.service';
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { Product } from '../../../../@entities/product';
+import { FormatCurrencyPipe } from '../../../../@pipes/format-currency.pipe';
+import { DummyService } from '../../../../@services/dummy.service';
+import { OrderService } from '../../order.service';
 
 @Component({
   selector: 'app-side-order',
@@ -19,7 +22,10 @@ import { Component } from '@angular/core';
   styleUrl: './side-order.component.scss',
 })
 export class SideOrderComponent {
-  constructor(public orderSvc: OrderService) {}
+  constructor(
+    public orderSvc: OrderService,
+    public dummySvc: DummyService,
+  ) {}
 
   public onIcreaseItemAmount(product: Product, index: number): void {
     this.orderSvc.cartList[index].amount += 1;
@@ -97,5 +103,9 @@ export class SideOrderComponent {
     setTimeout(() => {
       this.orderSvc.customerNameTmp = '';
     }, 200);
+  }
+
+  public formatTableName(table: string): string {
+    return table.replace('T-', 'Table ');
   }
 }

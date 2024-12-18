@@ -3,14 +3,16 @@
     <ng-container *ngIf="salesSvc.isTemplate">
       <nav class="mb-3 flex w-full items-center justify-between">
         <div class="flex items-center gap-4">
-          <div
+          <button
+            type="button"
             class="flex aspect-square w-[40px] items-center justify-center rounded-full bg-white"
+            (click)="sidebarSvc.onShow()"
           >
             <svg-icon
               src="icons/bars.svg"
               class="h-auto w-[23px] text-blue-500"
             ></svg-icon>
-          </div>
+          </button>
           <h1 class="text-[19px] font-semibold text-neutral-900">Tables</h1>
         </div>
 
@@ -18,9 +20,9 @@
           <div
             class="flex h-[40px] items-center gap-5 rounded-full bg-white pl-5 pr-[6px]"
           >
-            <span class="text-[12px] font-medium text-neutral-900"
-              >Wed, 29 May 2024</span
-            >
+            <span class="text-[12px] font-medium text-neutral-900">{{
+              date | formatDate
+            }}</span>
 
             <div
               class="flex aspect-square w-[30px] items-center justify-center rounded-full bg-blue-50"
@@ -55,16 +57,15 @@
 
       <div class="flex h-auto w-full gap-3">
         <aside class="relative h-[calc(100vh-70px)] w-[230px]">
-          <div
-            class="mb-3 flex h-[50px] w-full items-center rounded-xl bg-blue-500 px-5 text-[13px] font-medium text-white"
-          >
-            Tables
-          </div>
-          <div
-            class="flex h-[50px] w-full items-center rounded-xl bg-white px-5 text-[13px] font-medium text-neutral-900"
-          >
-            Order History
-          </div>
+          <ng-container *ngFor="let menu of menuList">
+            <button
+              type="button"
+              class="mb-3 flex h-[50px] w-full items-center rounded-xl bg-blue-500 px-5 text-[13px] font-medium text-white"
+              (click)="onClickRouter(menu.route)"
+            >
+              {{ menu.name }}
+            </button>
+          </ng-container>
 
           <div
             class="absolute bottom-0 left-0 right-0 w-full rounded-xl bg-white"
@@ -122,3 +123,5 @@
     </ng-container>
   </div>
 </div>
+
+<app-sidebar></app-sidebar>

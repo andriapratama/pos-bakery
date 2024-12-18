@@ -1,5 +1,6 @@
-import { Product } from './../../@entities/product';
 import { Injectable } from '@angular/core';
+
+import { Product } from '../../@entities/product';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,9 @@ export class OrderService {
   public customerName: string = 'Eloise';
   public customerNameTmp: string = '';
   public isEditCustomerName: boolean = false;
+
+  public table: string = '';
+  public date: number;
 
   constructor() {}
 }

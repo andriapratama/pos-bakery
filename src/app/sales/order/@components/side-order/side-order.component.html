@@ -88,11 +88,15 @@
         name="table"
         class="flex h-[40px] w-full appearance-none items-center rounded-full border-none bg-neutral-100 px-4 text-[13px] font-normal text-neutral-500 outline-none"
       >
-        <option value="table-1">Table 1</option>
-        <option value="table-2">Table 2</option>
-        <option value="table-3">Table 3</option>
-        <option value="table-4">Table 4</option>
-        <option value="table-5">Table 5</option>
+        <<ng-container *ngFor="let item of dummySvc.tableData">
+          <option
+            class="w-[300px]"
+            [value]="item.table"
+            [hidden]="item.status !== 'available'"
+          >
+            {{ formatTableName(item.table) }}
+          </option>
+        </ng-container>
       </select>
 
       <div
@@ -236,6 +240,7 @@
       </div>
     </div>
     <button
+      type="button"
       class="flex h-[60px] w-full items-center justify-center bg-blue-500"
     >
       <span class="text-[16px] font-normal text-white">Place Order</span>

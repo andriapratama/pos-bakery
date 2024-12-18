@@ -1,7 +1,7 @@
-import { Product } from './../@entities/product';
 import { Injectable } from '@angular/core';
 
 import { Category } from '../@entities/category';
+import { Product } from '../@entities/product';
 import { Table } from '../@entities/table';
 
 @Injectable({
@@ -375,42 +375,50 @@ export class DummyService {
     {
       id: 1,
       name: 'all menu',
+      slug: 'all-menu',
       icon: 'icons/book-open.svg',
     },
     {
       id: 2,
       name: 'breads',
+      slug: 'breads',
       icon: 'icons/cookie.svg',
     },
     {
       id: 3,
       name: 'cakes',
+      slug: 'cakes',
       icon: 'icons/cake.svg',
     },
     {
       id: 4,
       name: 'donuts',
+      slug: 'donuts',
       icon: 'icons/donut.svg',
     },
     {
       id: 5,
       name: 'pastries',
+      slug: 'pastries',
       icon: 'icons/croissant.svg',
     },
     {
       id: 6,
       name: 'sandwich',
+      slug: 'sandwich',
       icon: 'icons/sandwich.svg',
     },
     {
       id: 6,
       name: 'coffee',
-      icon: 'icons/sandwich.svg',
+      slug: 'coffee',
+      icon: 'icons/coffee.svg',
     },
     {
       id: 6,
       name: 'non coffee',
-      icon: 'icons/sandwich.svg',
+      slug: 'non-coffee',
+      icon: 'icons/cup-soda.svg',
     },
   ];
 
