@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../../../../@entities/product';
 import { FormatCurrencyPipe } from '../../../../@pipes/format-currency.pipe';
 import { DummyService } from '../../../../@services/dummy.service';
+import { ToastService } from '../../../../@services/toast.service';
 import { OrderService } from '../../order.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class SideOrderComponent {
   constructor(
     public orderSvc: OrderService,
     public dummySvc: DummyService,
+    private toast: ToastService,
   ) {}
 
   public onIcreaseItemAmount(product: Product, index: number): void {
@@ -107,5 +109,15 @@ export class SideOrderComponent {
 
   public formatTableName(table: string): string {
     return table.replace('T-', 'Table ');
+  }
+
+  public onPlaceOrder(): void {
+    if (this.orderSvc.cartList.length < 1) {
+      this.toast.error('Please select at least one menu item.', 'Error');
+      return;
+    } else {
+      this.orderSvc.isShowOrderDetailModal =
+        !this.orderSvc.isShowOrderDetailModal;
+    }
   }
 }

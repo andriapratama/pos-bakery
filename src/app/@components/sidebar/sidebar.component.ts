@@ -1,7 +1,8 @@
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SidebarService } from './sidebar.service';
 
@@ -12,17 +13,13 @@ import { SidebarService } from './sidebar.service';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  public routeActive: string = '';
   public menuList: Array<{ name: string; icon: string; route: string }> = [
     {
-      name: 'Point of Sales',
-      icon: 'icons/laptop-minimal.svg',
-      route: '/sales',
-    },
-    {
-      name: 'Activity',
+      name: 'Sales',
       icon: 'icons/trending-up.svg',
-      route: '/activity',
+      route: '/sales',
     },
     {
       name: 'Report',
@@ -46,5 +43,23 @@ export class SidebarComponent {
     },
   ];
 
-  constructor(public sidebarSvc: SidebarService) {}
+  constructor(
+    public sidebarSvc: SidebarService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    const url = this.router.url.split('/')[1];
+    this.routeActive = url;
+  }
+
+  public onRouter(route: string): void {
+    this.router.navigateByUrl(route).then();
+    this.sidebarSvc.onShow();
+  }
+
+  public matchRoute(route: string): boolean {
+    const match: boolean = route.includes(this.routeActive);
+    return match;
+  }
 }

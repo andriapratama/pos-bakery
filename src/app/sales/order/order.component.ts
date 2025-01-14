@@ -3,7 +3,9 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
+import { LoaderService } from '../../@components/loader/loader.service';
 import { SidebarService } from '../../@components/sidebar/sidebar.service';
 import { Product } from '../../@entities/product';
 import { FormatCurrencyPipe } from '../../@pipes/format-currency.pipe';
@@ -40,6 +42,8 @@ export class OrderComponent implements OnInit {
     public dummySvc: DummyService,
     private toast: ToastService,
     public sidebarSvc: SidebarService,
+    private loader: LoaderService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -164,6 +168,10 @@ export class OrderComponent implements OnInit {
     }, 200);
   }
 
+  public onHideOrderDetailModal(): void {
+    this.orderSvc.isShowOrderDetailModal = false;
+  }
+
   public onGetTotalProduct(name: string): string {
     const data = this.dummySvc.productList.filter(
       (product) =>
@@ -191,5 +199,17 @@ export class OrderComponent implements OnInit {
       default:
         return { bg: 'bg-[#737373]/10', text: 'text-[#737373]' };
     }
+  }
+
+  public onContinueOrder(): void {
+    this.loader.show();
+
+    setTimeout(() => {
+      this.loader.hide();
+      this.onHideOrderDetailModal();
+      this.orderSvc.cartList = [];
+      this.countSummary();
+      this.router.navigateByUrl('/sales/table-management');
+    }, 2000);
   }
 }

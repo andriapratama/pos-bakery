@@ -347,3 +347,89 @@
 
   <app-side-order></app-side-order>
 </div>
+
+<section
+  id="order-detail-modal"
+  class="absolute left-0 top-0  flex h-screen w-full items-center justify-center bg-blue-500/10 duration-200 ease-linear transition-all {{
+    orderSvc.isShowOrderDetailModal ? 'z-20 opacity-100' : '-z-10 opacity-0'
+  }}"
+>
+  <div class="h-auto w-[320px] overflow-hidden rounded-xl bg-white">
+    <div
+      class="relative mb-2 flex h-[45px] w-full items-center justify-center border-b border-dashed border-neutral-200"
+    >
+      <h1 class="text-[13px] font-medium text-neutral-900">Order Detail</h1>
+
+      <button
+        type="button"
+        class="absolute right-2 flex aspect-square w-[30px] items-center justify-center rounded-full bg-red-50 outline-none"
+        (click)="onHideOrderDetailModal()"
+      >
+        <svg-icon
+          src="icons/x-mark.svg"
+          class="w-[15px] text-red-500"
+        ></svg-icon>
+      </button>
+    </div>
+
+    <div class="max-h-[550px] w-full overflow-y-auto">
+      <ol class="my-3 px-3">
+        <li
+          class="mb-2 flex items-center justify-between border-b border-solid border-neutral-200 px-2 pb-1"
+        >
+          <p class="w-[20px] text-[13px] font-semibold text-neutral-900">#</p>
+          <p class="flex-1 text-[13px] font-semibold text-neutral-900">Menu</p>
+          <p class="text-[13px] font-semibold text-neutral-900">Qty</p>
+        </li>
+        <ng-container *ngFor="let item of orderSvc.cartList; index as i">
+          <li
+            class="mb-2 border-b border-solid border-neutral-200 pb-1 pl-2 pr-4"
+          >
+            <div class="flex w-full items-center justify-between">
+              <p class="w-[20px] text-[12px] font-medium text-neutral-900">
+                {{ i + 1 }}.
+              </p>
+              <p
+                class="flex-1 text-[12px] font-medium capitalize text-neutral-900"
+              >
+                {{ item.name }}
+              </p>
+              <p class="text-[12px] font-normal text-neutral-900">
+                {{ item.amount }}
+              </p>
+            </div>
+
+            <p
+              class="mt-1 pl-[20px] text-[12px] font-normal text-neutral-900"
+              *ngIf="item.note"
+            >
+              <span class="font-semibold">Note:</span> {{ item.note }}
+            </p>
+          </li>
+        </ng-container>
+      </ol>
+
+      <p
+        class="mb-3 w-full px-5 text-[12px] font-normal text-neutral-900"
+        *ngIf="orderSvc.globalNotes"
+      >
+        <span class="font-semibold">Global Notes:</span>
+        {{ orderSvc.globalNotes }}
+      </p>
+
+      <p
+        class="mb-3 w-full text-center text-[12px] font-normal text-neutral-900"
+      >
+        Total {{ orderSvc.cartList.length }} Menu
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="flex h-[40px] w-full items-center justify-center bg-blue-500"
+      (click)="onContinueOrder()"
+    >
+      <span class="text-[12px] font-normal text-white">Continue Order</span>
+    </button>
+  </div>
+</section>

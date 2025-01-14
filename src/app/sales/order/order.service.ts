@@ -26,5 +26,7 @@ export class OrderService {
   public table: string = '';
   public date: number;
 
+  public isShowOrderDetailModal: boolean = false;
+
   constructor() {}
 }
