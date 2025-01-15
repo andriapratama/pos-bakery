@@ -20,7 +20,7 @@ export const salesRoutes: Routes = [
           import('./order/order.component').then((m) => m.OrderComponent),
       },
       {
-        path: 'biling-queue',
+        path: 'billing-queue',
         loadComponent: () =>
           import('./billing-queue/billing-queue.component').then(
             (m) => m.BillingQueueComponent,

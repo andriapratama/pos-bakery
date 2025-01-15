@@ -13,7 +13,12 @@
               class="h-auto w-[23px] text-blue-500"
             ></svg-icon>
           </button>
-          <h1 class="text-[19px] font-semibold text-neutral-900">Tables</h1>
+          <h1 class="text-[19px] font-medium text-neutral-900">
+            {{ firstNameMenu }}
+            <span class="text-[13px] font-medium text-neutral-500">
+              / {{ secondNameMenu }}
+            </span>
+          </h1>
         </div>
 
         <div class="flex items-center gap-3">
@@ -60,7 +65,11 @@
           <ng-container *ngFor="let menu of menuList">
             <button
               type="button"
-              class="mb-3 flex h-[50px] w-full items-center rounded-xl bg-blue-500 px-5 text-[13px] font-medium text-white"
+              class="mb-3 flex h-[50px] w-full items-center rounded-xl px-5 text-[13px] font-medium {{
+                menu.name === secondNameMenu
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-neutral-900'
+              }}"
               (click)="onClickRouter(menu.route)"
             >
               {{ menu.name }}
@@ -113,7 +122,7 @@
           </div>
         </aside>
 
-        <div class="flex-1">
+        <div class="relative flex-1 overflow-hidden">
           <router-outlet />
         </div>
       </div>

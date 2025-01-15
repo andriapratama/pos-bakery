@@ -1,1 +1,141 @@
-<p>billing-queue works!</p>
+<section
+  id="billing-queue-filter"
+  class="mb-3 flex h-[50px] w-full items-center justify-between rounded-xl bg-white px-3"
+>
+  <div class="flex items-center gap-2">
+    <ng-container *ngFor="let filter of filterList">
+      <button
+        type="button"
+        class="flex h-[35px] w-[110px] items-center justify-center rounded-full text-[12px] font-normal capitalize {{
+          filter === filterActive
+            ? 'border border-solid border-blue-500 text-blue-500'
+            : 'bg-neutral-100 text-neutral-500'
+        }}"
+        (click)="onSelectFilter(filter)"
+      >
+        {{ filter }}
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <div
+      class="flex h-[35px] w-[130px] items-center justify-center rounded-full bg-blue-500/10 text-[12px] font-normal capitalize text-blue-500"
+    >
+      {{ findTotalBillingActive() }} Active Queue
+    </div>
+    <div
+      class="relative flex h-[35px] items-center justify-center rounded-full bg-neutral-100 duration-200 ease-in-out transition-all overflow-hidden {{
+        isShowSearchBillingQueue ? 'w-[225px]' : 'w-[35px]'
+      }}"
+    >
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Search ..."
+        class="h-[25px] w-[200px] border-none bg-transparent pl-6 text-[12px] font-normal text-neutral-500 outline-none {{
+          isShowSearchBillingQueue ? 'opacity-100 z-10' : 'opacity-0 -z-10'
+        }}"
+        [(ngModel)]="search"
+        (keyup)="onSearch()"
+      />
+      <svg-icon
+        src="icons/magnifaying-glasses.svg"
+        class="absolute h-auto w-[15px] text-neutral-900 duration-200 ease-in-out transition-all {{
+          isShowSearchBillingQueue ? 'left-2' : 'left-1/2 -translate-x-1/2'
+        }}"
+        (click)="onShowSearchBillingQueue()"
+      ></svg-icon>
+    </div>
+  </div>
+</section>
+
+<section
+  id="billing-list"
+  class="no-scrollbar mb-3 max-h-[calc(100vh-400px)] w-full overflow-y-auto rounded-xl bg-white px-3 py-2"
+>
+  <div
+    class="mb-2 flex h-auto w-full items-center justify-between border-b border-solid border-neutral-200 pb-2 last:mb-0 last:border-none last:pb-0"
+    *ngFor="let billing of dummySvc.billingQueueList"
+  >
+    <div class="flex-1">
+      <p class="text-[15px] font-normal text-neutral-900">{{ billing.name }}</p>
+      <p class="text-[14px] font-normal text-neutral-500">
+        Order Number:
+        <span class="text-neutral-900">{{ billing.orderNumber }}</span>
+      </p>
+      <p class="text-[14px] font-normal text-neutral-500">
+        Table: <span class="text-neutral-900">{{ billing.table }}</span>
+      </p>
+      <p class="mt-1 text-[14px] font-normal text-neutral-500">
+        {{ billing.createdAt }}
+      </p>
+    </div>
+    <div class="my-auto flex h-full flex-col items-end">
+      <p class="font-mendium mb-2 text-[17px] text-neutral-900">
+        {{ billing.totalPayment | formatCurrency: "full" }}
+      </p>
+      <p
+        class="flex h-[32px] w-fit items-center justify-center rounded-full  px-5 text-[14px] font-normal  {{
+          billing.status
+            ? 'bg-blue-500/10 text-blue-500'
+            : 'bg-red-500/10 text-red-500'
+        }}"
+      >
+        {{ billing.status ? "Active" : "Closed" }}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section
+  id="filter-track-order"
+  class="mb-3 flex h-[50px] w-full items-center justify-between rounded-xl bg-white px-3"
+>
+  <h1 class="text-[17px] font-medium text-neutral-900">Track Order</h1>
+
+  <div
+    class="relative flex h-[35px] items-center justify-center rounded-full bg-neutral-100 duration-200 ease-in-out transition-all overflow-hidden {{
+      isShowSearchTrackOrder ? 'w-[225px]' : 'w-[35px]'
+    }}"
+  >
+    <input
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Search ..."
+      class="h-[25px] w-[200px] border-none bg-transparent pl-6 text-[12px] font-normal text-neutral-500 outline-none {{
+        isShowSearchTrackOrder ? 'opacity-100 z-10' : 'opacity-0 -z-10'
+      }}"
+      [(ngModel)]="search"
+      (keyup)="onSearch()"
+    />
+    <svg-icon
+      src="icons/magnifaying-glasses.svg"
+      class="absolute h-auto w-[15px] text-neutral-900 duration-200 ease-in-out transition-all {{
+        isShowSearchTrackOrder ? 'left-2' : 'left-1/2 -translate-x-1/2'
+      }}"
+      (click)="onShowSearchTrackOrder()"
+    ></svg-icon>
+  </div>
+</section>
+
+<section
+  class="no-scrollbar flex h-[196px] w-full gap-2 overflow-x-auto rounded-xl bg-white px-3 py-2"
+>
+  <div
+    class="h-full w-[190px] shrink-0 rounded-lg border border-solid border-neutral-200 p-2"
+  >
+    <div class="flex w-full items-center justify-between">
+      <p class="text-[14px] font-normal text-neutral-900">Mike</p>
+      <p
+        class="rounded-full bg-neutral-500/10 px-2 py-1 text-[8px] font-normal text-neutral-900"
+      >
+        On Kitchen Hand
+      </p>
+    </div>
+    <p class="text-[12px] font-normal text-neutral-500">Table 04 . Dine In</p>
+    <p class="text-[12px] font-normal text-neutral-500">10.00 AM</p>
+  </div>
+</section>
