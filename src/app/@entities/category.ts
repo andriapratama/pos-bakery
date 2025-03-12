@@ -1,6 +1,6 @@
 export class Category {
-  id: number;
-  name: string;
-  slug: string;
-  icon: string;
+  public id: number;
+  public name: string;
+  public slug: string;
+  public icon: string;
 }

@@ -4,6 +4,7 @@ import { BillingQueue } from '../@entities/billing-queue';
 import { Category } from '../@entities/category';
 import { Product } from '../@entities/product';
 import { Table } from '../@entities/table';
+import { TrackOrder } from '../@entities/track-order';
 
 @Injectable({
   providedIn: 'root',
@@ -1250,6 +1251,156 @@ export class DummyService {
       totalPayment: 860153,
       status: true,
       createdAt: '2025-01-15 11:27:00 AM',
+    },
+  ];
+
+  public trackOrderList: TrackOrder[] = [
+    {
+      id: 1,
+      name: 'John Doe',
+      statusOrder: 'waiting',
+      serviceMode: 'dine_in',
+      table: '12',
+      orderDetail: [
+        { name: 'French Baguette', amount: 2, statusMenu: 'waiting' },
+        { name: 'Red Velvet Cake', amount: 1, statusMenu: 'waiting' },
+        { name: 'Club Sandwich', amount: 3, statusMenu: 'waiting' },
+        { name: 'Vanilla Sponge Cake', amount: 1, statusMenu: 'waiting' },
+      ],
+      createdAt: '2025-01-16T09:15:00Z',
+      status: true,
+    },
+    {
+      id: 2,
+      name: 'Alice Smith',
+      statusOrder: 'in_progress',
+      serviceMode: 'dine_out',
+      table: '05',
+      orderDetail: [
+        { name: 'Whole Wheat Bread', amount: 2, statusMenu: 'in_progress' },
+        { name: 'Bagel', amount: 3, statusMenu: 'in_progress' },
+        { name: 'Vanilla Sponge Cake', amount: 1, statusMenu: 'ready' },
+        { name: 'Cinnamon Twist', amount: 1, statusMenu: 'ready' },
+        { name: 'Powdered Sugar Donut', amount: 4, statusMenu: 'ready' },
+        { name: 'Old-Fashioned Donut', amount: 2, statusMenu: 'ready' },
+      ],
+      createdAt: '2025-01-16T10:30:00Z',
+      status: true,
+    },
+    {
+      id: 3,
+      name: 'Michael Johnson',
+      statusOrder: 'complete',
+      serviceMode: 'dine_in',
+      table: '23',
+      orderDetail: [
+        { name: 'Cinnamon Twist', amount: 1, statusMenu: 'complete' },
+        { name: 'Powdered Sugar Donut', amount: 4, statusMenu: 'complete' },
+        { name: 'Old-Fashioned Donut', amount: 2, statusMenu: 'complete' },
+        { name: 'Club Sandwich', amount: 3, statusMenu: 'complete' },
+        { name: 'Vanilla Sponge Cake', amount: 1, statusMenu: 'complete' },
+        { name: 'Sourdough Loaf', amount: 4, statusMenu: 'complete' },
+      ],
+      createdAt: '2025-01-16T12:00:00Z',
+      status: true,
+    },
+    {
+      id: 4,
+      name: 'Sarah Brown',
+      statusOrder: 'waiting',
+      serviceMode: 'dine_out',
+      table: '19',
+      orderDetail: [
+        { name: 'Strudel', amount: 2, statusMenu: 'waiting' },
+        { name: 'Boston Cream Donut', amount: 3, statusMenu: 'waiting' },
+        { name: 'Pita Bread', amount: 1, statusMenu: 'waiting' },
+      ],
+      createdAt: '2025-01-16T14:45:00Z',
+      status: true,
+    },
+    {
+      id: 5,
+      name: 'James Wilson',
+      statusOrder: 'in_progress',
+      serviceMode: 'dine_in',
+      table: '34',
+      orderDetail: [
+        { name: 'Club Sandwich', amount: 3, statusMenu: 'in_progress' },
+        { name: 'Vanilla Sponge Cake', amount: 1, statusMenu: 'in_progress' },
+        { name: 'Sourdough Loaf', amount: 4, statusMenu: 'ready' },
+      ],
+      createdAt: '2025-01-16T16:30:00Z',
+      status: true,
+    },
+    {
+      id: 6,
+      name: 'Emma Davis',
+      statusOrder: 'complete',
+      serviceMode: 'dine_out',
+      table: '29',
+      orderDetail: [
+        { name: 'Bagel', amount: 2, statusMenu: 'complete' },
+        { name: 'Powdered Sugar Donut', amount: 1, statusMenu: 'complete' },
+        { name: 'Red Velvet Cake', amount: 2, statusMenu: 'complete' },
+      ],
+      createdAt: '2025-01-16T18:00:00Z',
+      status: true,
+    },
+    {
+      id: 7,
+      name: 'Oliver Martinez',
+      statusOrder: 'waiting',
+      serviceMode: 'dine_in',
+      table: '07',
+      orderDetail: [
+        { name: 'French Baguette', amount: 3, statusMenu: 'waiting' },
+        { name: 'Boston Cream Donut', amount: 2, statusMenu: 'waiting' },
+        { name: 'Old-Fashioned Donut', amount: 1, statusMenu: 'waiting' },
+      ],
+      createdAt: '2025-01-16T19:15:00Z',
+      status: true,
+    },
+    {
+      id: 8,
+      name: 'Sophia Anderson',
+      statusOrder: 'in_progress',
+      serviceMode: 'dine_out',
+      table: '11',
+      orderDetail: [
+        { name: 'Whole Wheat Bread', amount: 4, statusMenu: 'in_progress' },
+        { name: 'Cinnamon Twist', amount: 2, statusMenu: 'in_progress' },
+        { name: 'Sourdough Loaf', amount: 1, statusMenu: 'ready' },
+      ],
+      createdAt: '2025-01-16T20:30:00Z',
+      status: true,
+    },
+    {
+      id: 9,
+      name: 'Liam Garcia',
+      statusOrder: 'complete',
+      serviceMode: 'dine_in',
+      table: '02',
+      orderDetail: [
+        { name: 'Strudel', amount: 1, statusMenu: 'complete' },
+        { name: 'Club Sandwich', amount: 2, statusMenu: 'complete' },
+        { name: 'Pita Bread', amount: 3, statusMenu: 'complete' },
+      ],
+      createdAt: '2025-01-16T21:00:00Z',
+      status: true,
+    },
+    {
+      id: 10,
+      name: 'Charlotte Thompson',
+      statusOrder: 'waiting',
+      serviceMode: 'dine_out',
+      table: '37',
+      orderDetail: [
+        { name: 'Vanilla Sponge Cake', amount: 2, statusMenu: 'waiting' },
+        { name: 'Red Velvet Cake', amount: 3, statusMenu: 'waiting' },
+        { name: 'Boston Cream Donut', amount: 1, statusMenu: 'waiting' },
+      ],
+      createdAt: '2025-01-16T22:15:00Z',
+      status: true,
     },
   ];
 
